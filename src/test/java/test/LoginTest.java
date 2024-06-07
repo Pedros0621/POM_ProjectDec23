@@ -12,6 +12,13 @@ import util.BrowserFactory;
 public class LoginTest {
 	
 WebDriver driver;
+
+String userName="demo@codefios.com";
+String password="abc123";
+String dashboardHeaderText="Dashboard";
+String userNameAlerMsg="Please enter your user name";
+String passwordAlertMsg="Please enter your password";
+
 	@Test
 	public void validUserShouldBeAbleToLogin() {
 		
@@ -22,14 +29,15 @@ WebDriver driver;
 		driver=BrowserFactory.init();
 		//driver.findElement(By.xpath("//*[@id=\"login_submit\"]")).click();
 		LoginPage loginPage = PageFactory.initElements(driver, LoginPage.class);
-		loginPage.insertUserName("demo@codefios.com");
-		loginPage.insertPassword("abc123");
+		loginPage.insertUserName(userName);
+		loginPage.insertPassword(password);
 		loginPage.clickSignButton();
 		
 		DashboardPage dashboardPage = PageFactory.initElements(driver, DashboardPage.class);
-		String actualDashboardHeaderText = dashboardPage.validateDashboardPageText();
-		Assert.assertEquals(actualDashboardHeaderText, "Dashboard", "Dashboard page not found!!");
-		//Assert.assertEquals(dashboardPage.validateDashboardPageText(), "Dashboard", "Dashboard page not found!!");
+		dashboardPage.validateDashboardPageText(dashboardHeaderText);
+		//String actualDashboardHeaderText = dashboardPage.validateDashboardPageText();
+		//Assert.assertEquals(actualDashboardHeaderText, "Dashboard", "Dashboard page not found!!");
+		Assert.assertEquals(dashboardPage.getvalidateDashboardPageText(), "Dashboard", "Dashboard page not found!!");
 		//Assert.assertEquals(actualDashboardHeaderText, "Dashboard", "Dashboard page not found");
 		
 		BrowserFactory.tearDown();
